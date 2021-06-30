@@ -42,9 +42,12 @@ str(datos.primarios.denue)
 dim(datos.primarios.denue)
 
 mis.columnas.norte <- colnames(datos.primarios.denue)
-save(mis.columnas.norte, file="mis.columnas.norte.csv")
+save(mis.columnas.norte, file="mis.columnas.norte.R")
+load("mis.columnas.norte.R")
+mis.columnas.norte
+
 # limpiar los headers.
-nombre.headers <- c("id","nombre","razon.social","codigo.scian","nombre.actividad","descripcion.estrato",
+nombre.headers <- c("id","Clee","nombre","razon.social","codigo.scian","nombre.actividad","descripcion.estrato",
                     "tipo.vialidad","nombre.vialidad","tipo.entre.vialidad.1","nombre.entre.vialidad.1",
                     "tipo.entre.vialidad.2","nombre.entre.vialidad.2","tipo.entre.vialidad.3","nombre.entre.vialidad.3",
                     "numero.exterior","letra.exterior","edificio","edificio.piso","numero.interior","letra.interior",
