@@ -39,8 +39,9 @@ c.1 + c.2
  
  alumnos.v.2021
  getwd()
- save(alumnos.v.2021, file="alumnos.v.2021")
- 
- load("alumnos.v.2021")
+ setwd("/Users/pepesrz/Desktop/Simulacion")
+ # save(alumnos.v.2021, file="alumnos.v.2021.R")
+ rm(alumnos.v.2021)
+ load("alumnos.v.2021.R")
  
  
