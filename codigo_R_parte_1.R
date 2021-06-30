@@ -34,9 +34,15 @@ setwd(directorio.de.trabajo)
 # load("region.lookup.table.R")
 # region.lookup.table
 datos.primarios.denue <- read.csv(nombre.archivo.denue,stringsAsFactors = F,  fileEncoding='latin1')
+colnames(datos.primarios.denue)
+length(colnames(datos.primarios.denue))
+head(datos.primarios.denue)
 nrow(datos.primarios.denue)
 str(datos.primarios.denue)
 dim(datos.primarios.denue)
+
+mis.columnas.norte <- colnames(datos.primarios.denue)
+save(mis.columnas.norte, file="mis.columnas.norte.csv")
 # limpiar los headers.
 nombre.headers <- c("id","nombre","razon.social","codigo.scian","nombre.actividad","descripcion.estrato",
                     "tipo.vialidad","nombre.vialidad","tipo.entre.vialidad.1","nombre.entre.vialidad.1",
