@@ -1,12 +1,13 @@
 # código R parte 1
 
-list.of.packages <- c("RJSONIO", "ore","dplyr","purrr","cronR")
+list.of.packages <- c("reshape2", "rpivotTable","dplyr","tidyr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 library(dplyr)
 library(reshape2)
 library(tidyr)
+library(rpivotTable)
 
 ?dashboardHeader
 
@@ -14,15 +15,17 @@ library(tidyr)
 #install.packages("shiny")
 library(shiny)
 
+Sys.setlocale("LC_ALL", 'es_ES')
+content.file <- read.csv("comentarios1.json",encoding="Latin-1", header = F)
 # variables de configuracion
-directorio.de.trabajo <- "/Users/adeobeso/Downloads/educacion 2.0"
-nombre.archivo.denue <- "INEGI_DENUE_VALLES.csv"
-region.actual <- "ALTOS SUR"
+directorio.de.trabajo <- getwd()
+nombre.archivo.denue <- "INEGI_DENUE_COLOTLAN.csv"
+region.actual <- "NORTE"
 ventana.prediccion <- 15.5
 anio.prediccion <- 2030
-carrera.especifica <- ""
-archivo.mapeo.carreras.l4 <- "mapeocarreral4scian.csv"
-mario.molina.relevante <- c("TECMM.Arandas")  # pueden ser varios. 
+# carrera.especifica <- ""
+# archivo.mapeo.carreras.l4 <- "mapeocarreral4scian.csv"
+# mario.molina.relevante <- c("TECMM.ATequila")  # pueden ser varios. 
 limite.superior.relevancia <- 2
 
 # datos denue
@@ -30,7 +33,7 @@ getwd()
 setwd(directorio.de.trabajo)
 # load("region.lookup.table.R")
 # region.lookup.table
-datos.primarios.denue <- read.csv(nombre.archivo.denue,stringsAsFactors = F) # fileEncoding='latin1')
+datos.primarios.denue <- read.csv(nombre.archivo.denue,stringsAsFactors = F,  fileEncoding='latin1')
 nrow(datos.primarios.denue)
 str(datos.primarios.denue)
 dim(datos.primarios.denue)
