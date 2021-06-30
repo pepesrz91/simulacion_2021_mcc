@@ -19,7 +19,7 @@ Sys.setlocale("LC_ALL", 'es_ES')
 content.file <- read.csv("comentarios1.json",encoding="Latin-1", header = F)
 # variables de configuracion
 directorio.de.trabajo <- getwd()
-nombre.archivo.denue <- "INEGI_DENUE_COLOTLAN.csv"
+nombre.archivo.denue <- "INEGI_DENUE_NORTE.csv"
 region.actual <- "NORTE"
 ventana.prediccion <- 15.5
 anio.prediccion <- 2030
