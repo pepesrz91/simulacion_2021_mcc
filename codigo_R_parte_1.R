@@ -1,0 +1,74 @@
+# código R parte 1
+library(dplyr)
+library(reshape2)
+library(tidyr)
+
+?dashboardHeader
+
+#install.packages("rpivotTable")
+#install.packages("shiny")
+library(shiny)
+
+# variables de configuracion
+directorio.de.trabajo <- "/Users/adeobeso/Downloads/educacion 2.0"
+nombre.archivo.denue <- "INEGI_DENUE_VALLES.csv"
+region.actual <- "ALTOS SUR"
+ventana.prediccion <- 15.5
+anio.prediccion <- 2030
+carrera.especifica <- ""
+archivo.mapeo.carreras.l4 <- "mapeocarreral4scian.csv"
+mario.molina.relevante <- c("TECMM.Arandas")  # pueden ser varios. 
+limite.superior.relevancia <- 2
+
+# datos denue
+getwd()
+setwd(directorio.de.trabajo)
+# load("region.lookup.table.R")
+# region.lookup.table
+datos.primarios.denue <- read.csv(nombre.archivo.denue,stringsAsFactors = F) # fileEncoding='latin1')
+nrow(datos.primarios.denue)
+str(datos.primarios.denue)
+dim(datos.primarios.denue)
+# limpiar los headers.
+nombre.headers <- c("id","nombre","razon.social","codigo.scian","nombre.actividad","descripcion.estrato",
+                    "tipo.vialidad","nombre.vialidad","tipo.entre.vialidad.1","nombre.entre.vialidad.1",
+                    "tipo.entre.vialidad.2","nombre.entre.vialidad.2","tipo.entre.vialidad.3","nombre.entre.vialidad.3",
+                    "numero.exterior","letra.exterior","edificio","edificio.piso","numero.interior","letra.interior",
+                    "tipo.asentamiento","nombre.asentamiento","tipo.centro.comercial","corredor.industrial.centro.comercial.o.mercado.publico",
+                    "numero.local","codigo.postal","clave.entidad","entidad.federativa","clave.municipio","nombre.municipio", "clave.localidad",
+                    "nombre.localidad","ageb","manzana","numero.telefono","email","sitio.web","tipo.establecimiento","lat","long", "fecha.incorporacion")
+length(nombre.headers)
+nombre.headers
+head(datos.primarios.denue)
+colnames(datos.primarios.denue) <- nombre.headers
+str(datos.primarios.denue)
+
+unique(datos.primarios.denue$tipo.establecimiento)
+
+columnas.elegidas <- c("id","nombre","codigo.scian","nombre.actividad","descripcion.estrato", "tipo.asentamiento",
+                       "nombre.asentamiento","codigo.postal","clave.municipio","nombre.municipio","clave.localidad",
+                       "nombre.localidad", "tipo.establecimiento", "lat", "long", "fecha.incorporacion")
+denue.columnas.seleccion <- datos.primarios.denue[,columnas.elegidas]
+str(denue.columnas.seleccion)
+
+# asignar potencial demanda por estrato
+unique(denue.columnas.seleccion.demanda$descripcion.estrato)
+denue.columnas.seleccion.demanda <- denue.columnas.seleccion
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="0 a 5 personas","demanda"] <- 1
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="6 a 10 personas","demanda"] <- 2
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="11 a 30 personas","demanda"] <- 4
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="31 a 50 personas","demanda"] <- 7
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="51 a 100 personas","demanda"] <- 14
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="101 a 250 personas","demanda"] <- 30
+denue.columnas.seleccion.demanda[denue.columnas.seleccion.demanda$descripcion.estrato=="251 y mas personas","demanda"] <- 50
+
+denue.columnas.seleccion.demanda$subscian <- substr(as.character(denue.columnas.seleccion.demanda$codigo.scian),1,3)
+# esta es la columna para hacer el mapeo
+denue.columnas.seleccion.demanda$l4 <- substr(as.character(denue.columnas.seleccion.demanda$codigo.scian),1,4)
+str(denue.columnas.seleccion.demanda)
+head(denue.columnas.seleccion.demanda)
+colnames(denue.columnas.seleccion.demanda)
+datos.pivote <- denue.columnas.seleccion.demanda[,c("codigo.scian","descripcion.estrato","nombre.municipio",
+                                                    "fecha.incorporacion","demanda","subscian","l4")]
+datos.pivote$sector <- substr(as.character(datos.pivote$codigo.scian),1,2)
+head(datos.pivote)
