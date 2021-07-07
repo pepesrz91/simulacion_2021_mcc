@@ -89,3 +89,10 @@ datos.pivote <- denue.columnas.seleccion.demanda[,c("codigo.scian","descripcion.
                                                     "fecha.incorporacion","demanda","subscian","l4")]
 datos.pivote$sector <- substr(as.character(datos.pivote$codigo.scian),1,2)
 head(datos.pivote)
+
+datos.pea <- read.csv("conjunto_de_datos_sdem_enoen_2021_1t.csv")
+nrow(datos.pea)
+
+# Casimiro
+datos.pea.jalisco <- datos.pea[datos.pea$est == 14]
+datos.pea
