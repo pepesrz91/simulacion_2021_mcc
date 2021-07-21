@@ -1,6 +1,6 @@
 # código R parte 1
 
-list.of.packages <- c("lsa", "rpivotTable","dplyr","tidyr", "shiny","shinydashboard", "dplyr", "DT")
+list.of.packages <- c("lsa", "rpivotTable","dplyr","tidyr", "shiny","shinydashboard", "dplyr", "DT", "XLConnect")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -96,3 +96,20 @@ nrow(datos.pea)
 # Casimiro
 datos.pea.jalisco <- datos.pea[datos.pea$est == 14]
 datos.pea
+
+install.packages("readxl")
+library("readxl")
+# Check if you already installed the package
+any(grepl("data.table", 
+          installed.packages()))
+
+# Integración
+df <- read_excel("datos_madre.xlsx",
+                            sheet = 1, head=FALSE)
+head(df)
+
+df <- df[-c(1,2,3,4,5),]
+df <- df[, -c(5:length(df))]
+head(df)
+colnames(df) <- c("clave.municipio", "municipio", "total", "1990.menor.15a19, ")
+head(df)

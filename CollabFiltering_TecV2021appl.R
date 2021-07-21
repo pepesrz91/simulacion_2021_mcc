@@ -13,6 +13,8 @@ head(music.usage)
 rownames(music.usage)
 music.usage$abba
 sum(music.usage$abba)
+
+sum(music.usage$the.killers)
 # Data 15k
 sum(as.matrix(music.usage[,-1]))
 music.usage.nouser <- music.usage[,-1]
@@ -25,7 +27,7 @@ dot.prod <- function(v1,v2) {
 magnit.vec <- function(v1) {
   sqrt(sum(v1 * v1))
 }
-
+mu
 # 1.- A distance measure used to calculate similarity between products (Cosine, distance between vectors)
 dist.cosine <- function(v1, v2) {
   return(dot.prod(v1,v2)/(magnit.vec(v1)*magnit.vec(v2)))
@@ -40,7 +42,7 @@ dist.cosine(c(1,1,1),c(100,100,100))
 
 indiv.1 <- music.usage.nouser[1,]
 indiv.2 <- music.usage.nouser[2,]
-dist.cosine(indiv.1, indiv.2)
+dist.cosine(indiv.1, indiv.2)tas
 dist.cosine(indiv.1, indiv.1)
 
 colnames(music.usage.nouser)
